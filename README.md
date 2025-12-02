@@ -2,253 +2,163 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Agenda de Aulas de Teatro</title>
-<!-- Fonte estilizada -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agendamento de Aulas de Figurinos</title>
 <style>
   body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: #fff;
+    font-family: "Arial", sans-serif;
+    background-color: #f0e6d2;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    color: #333;
   }
 
   header {
+    background-color: #4b2e83;
+    color: #fff;
+    padding: 20px;
     text-align: center;
-    margin-bottom: 30px;
   }
 
-  h1 {
+  header h1 {
+    margin: 0;
+    font-family: "Georgia", serif;
     font-size: 2.5em;
-    margin-bottom: 10px;
+  }
+
+  section {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  h2 {
+    color: #4b2e83;
+    border-bottom: 2px solid #4b2e83;
+    padding-bottom: 10px;
   }
 
   p {
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 
-  .button {
-    background-color: #ff6f61;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 25px;
-    cursor: pointer;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #fff8f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  label {
     font-weight: bold;
-    transition: background 0.3s;
-  }
-  .button:hover {
-    background-color: #ff3b2e;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  th, td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-  }
-
-  th {
-    background-color: rgba(0,0,0,0.3);
-    font-weight: 700;
-  }
-
-  input[type="text"] {
-    width: 90%;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0 0 5px #fff;
-  }
-
-  .protected {
-    background-color: #ddd;
-    color: #555;
-  }
-
-  footer {
-    text-align: center;
-    margin-top: 40px;
+  input, select, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 1em;
   }
 
+  button {
+    background-color: #4b2e83;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #6a378f;
+  }
+
+  #confirmacao {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e0d4b8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  footer {
+    background-color: #4b2e83;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Curso de Teatro - Agenda de Aulas</h1>
-  <p>Organize as aulas e acompanhe o progresso dos alunos</p>
-  <button class="button" onclick="salvarDados()">Salvar Dados</button>
-  <button class="button" onclick="carregarDados()">Carregar Dados</button>
+  <h1>Marca Sua Aula de Figurinos</h1>
+  <p>Aprenda técnicas de figurino para teatro, cinema e moda!</p>
 </header>
 
-<table id="tabelaAulas">
-  <thead>
-    <tr>
-      <th>Nome do Aluno</th>
-      <th>Dia da Semana</th>
-      <th>Horário</th>
-      <th>Status</th>
-      <th>Comentários</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Linhas geradas pelo JavaScript -->
-  </tbody>
-</table>
+<section>
+  <h2>Agende sua aula</h2>
+  <p>Preencha o formulário abaixo para marcar sua aula de figurinos com nossos especialistas. Escolha o melhor dia e horário para você.</p>
+  <form id="formAula">
+    <label for="nome">Nome completo:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="telefone">Telefone:</label>
+    <input type="tel" id="telefone" name="telefone" required>
+
+    <label for="dia">Dia da aula:</label>
+    <select id="dia" name="dia" required>
+      <option value="">Selecione o dia</option>
+      <option value="Segunda-feira">Segunda-feira</option>
+      <option value="Terça-feira">Terça-feira</option>
+      <option value="Quarta-feira">Quarta-feira</option>
+      <option value="Quinta-feira">Quinta-feira</option>
+      <option value="Sexta-feira">Sexta-feira</option>
+    </select>
+
+    <label for="hora">Horário:</label>
+    <select id="hora" name="hora" required>
+      <option value="">Selecione o horário</option>
+      <option value="14:00">14:00</option>
+      <option value="15:30">15:30</option>
+      <option value="17:00">17:00</option>
+      <option value="18:30">18:30</option>
+    </select>
+
+    <label for="mensagem">Mensagem (opcional):</label>
+    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Alguma dúvida ou informação adicional..."></textarea>
+
+    <button type="submit">Enviar agendamento</button>
+  </form>
+  <div id="confirmacao">
+    <h3>Agendamento recebido!</h3>
+    <p>Obrigado por marcar sua aula de figurinos. Entraremos em contato em breve para confirmar os detalhes.</p>
+  </div>
+</section>
 
 <footer>
-  <p>&copy; 2024 Curso de Teatro - Todos os direitos reservados</p>
+  <p>© 2024 Escola de Figurinos - Todos os direitos reservados</p>
 </footer>
 
 <script>
-const dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
-const horarios = ["8h-9h", "9h-10h", "10h-11h", "11h-12h", "12h-13h", "13h-14h", "14h-15h", "15h-16h", "16h-17h"];
-
-const tbody = document.querySelector("#tabelaAulas tbody");
-
-// Criar linhas de aulas
-for (const dia of dias) {
-  for (const horario of horarios) {
-    const row = document.createElement("tr");
-
-    // Nome do aluno
-    const nomeTd = document.createElement("td");
-    const nomeInput = document.createElement("input");
-    nomeInput.type = "text";
-    nomeInput.placeholder = "Nome do Aluno";
-    nomeTd.appendChild(nomeInput);
-    row.appendChild(nomeTd);
-
-    // Dia
-    const diaTd = document.createElement("td");
-    const diaInput = document.createElement("input");
-    diaInput.type = "text";
-    diaInput.value = dia;
-    diaInput.disabled = true;
-    diaTd.appendChild(diaInput);
-    row.appendChild(diaTd);
-
-    // Horário
-    const horarioTd = document.createElement("td");
-    const horarioInput = document.createElement("input");
-    horarioInput.type = "text";
-    horarioInput.value = horario;
-    horarioInput.disabled = true;
-    horarioTd.appendChild(horarioInput);
-    row.appendChild(horarioTd);
-
-    // Status
-    const statusTd = document.createElement("td");
-    const statusInput = document.createElement("input");
-    statusInput.type = "text";
-    statusInput.placeholder = "Status";
-    statusInput.onfocus = () => protegerCelula(statusInput);
-    statusTd.appendChild(statusInput);
-    row.appendChild(statusTd);
-
-    // Comentários
-    const comentariosTd = document.createElement("td");
-    const comentariosInput = document.createElement("input");
-    comentariosInput.type = "text";
-    comentariosInput.placeholder = "Comentários";
-    comentariosInput.onfocus = () => protegerCelula(comentariosInput);
-    comentariosTd.appendChild(comentariosInput);
-    row.appendChild(comentariosTd);
-
-    tbody.appendChild(row);
-  }
-}
-
-const celulasProtegidas = new Set();
-
-function protegerCelula(campo) {
-  if (campo.readOnly) return;
-  campo.readOnly = true;
-  campo.classList.add("protected");
-  celulasProtegidas.add(campo);
-}
-
-function salvarDados() {
-  const dados = [];
-  document.querySelectorAll("#tabelaAulas tbody tr").forEach(row => {
-    const tds = row.querySelectorAll("td");
-    const registro = {
-      nome: tds[0].children[0].value,
-      dia: tds[1].children[0].value,
-      horario: tds[2].children[0].value,
-      status: tds[3].children[0].value,
-      comentarios: tds[4].children[0].value
-    };
-    dados.push(registro);
+  // JavaScript para exibir mensagem de confirmação ao enviar o formulário
+  document.getElementById('formAula').addEventListener('submit', function(e) {
+    e.preventDefault(); // Impede o envio padrão do formulário
+    // Aqui, você pode integrar com backend ou enviar por AJAX
+    // Para efeito de exemplo, só mostra a mensagem
+    document.getElementById('formAula').style.display = 'none';
+    document.getElementById('confirmacao').style.display = 'block';
   });
-  localStorage.setItem("agendaAulas", JSON.stringify(dados));
-  alert("Dados salvos!");
-}
-
-function carregarDados() {
-  const dados = JSON.parse(localStorage.getItem("agendaAulas") || "[]");
-  document.querySelector("#tabelaAulas tbody").innerHTML = "";
-  for (const reg of dados) {
-    const row = document.createElement("tr");
-
-    const nomeTd = document.createElement("td");
-    const nomeInput = document.createElement("input");
-    nomeInput.type = "text";
-    nomeInput.value = reg.nome;
-    nomeTd.appendChild(nomeInput);
-    row.appendChild(nomeTd);
-
-    const diaTd = document.createElement("td");
-    const diaInput = document.createElement("input");
-    diaInput.type = "text";
-    diaInput.value = reg.dia;
-    diaInput.disabled = true;
-    diaTd.appendChild(diaInput);
-    row.appendChild(diaTd);
-
-    const horarioTd = document.createElement("td");
-    const horarioInput = document.createElement("input");
-    horarioInput.type = "text";
-    horarioInput.value = reg.horario;
-    horarioInput.disabled = true;
-    horarioTd.appendChild(horarioInput);
-    row.appendChild(horarioTd);
-
-    const statusTd = document.createElement("td");
-    const statusInput = document.createElement("input");
-    statusInput.type = "text";
-    statusInput.value = reg.status;
-    statusInput.onfocus = () => protegerCelula(statusInput);
-    statusTd.appendChild(statusInput);
-    row.appendChild(statusTd);
-
-    const comentariosTd = document.createElement("td");
-    const comentariosInput = document.createElement("input");
-    comentariosInput.type = "text";
-    comentariosInput.value = reg.comentarios;
-    comentariosInput.onfocus = () => protegerCelula(comentariosInput);
-    comentariosTd.appendChild(comentariosInput);
-    row.appendChild(comentariosTd);
-
-    document.querySelector("#tabelaAulas tbody").appendChild(row);
-  }
-}
 </script>
 
 </body>
