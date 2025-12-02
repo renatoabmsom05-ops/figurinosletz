@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Index.HTML</title><meta name="title" content="Index.HTML"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
+  "imports": {}
+}</script></head><body>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda de Aulas de Teatro</title>
+<!-- Fonte estilizada -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  .button {
+    background-color: #ff6f61;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  .button:hover {
+    background-color: #ff3b2e;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+
+  th {
+    background-color: rgba(0,0,0,0.3);
+    font-weight: 700;
+  }
+
+  input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px #fff;
+  }
+
+  .protected {
+    background-color: #ddd;
+    color: #555;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1em;
+  }
+
+</style>
+
+
+
+<header>
+  <h1>Curso de Teatro - Agenda de Aulas</h1>
+  <p>Organize as aulas e acompanhe o progresso dos alunos</p>
+  <button class="button" onclick="salvarDados()">Salvar Dados</button>
+  <button class="button" onclick="carregarDados()">Carregar Dados</button>
+</header>
+
+<table id="tabelaAulas">
+  <thead>
+    <tr>
+      <th>Nome do Aluno</th>
+      <th>Dia da Semana</th>
+      <th>Horário</th>
+      <th>Status</th>
+      <th>Comentários</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Linhas geradas pelo JavaScript -->
+  </tbody>
+</table>
+
+<footer>
+  <p>© 2024 Curso de Teatro - Todos os direitos reservados</p>
+</footer>
+
+<script>
+const dias = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+const horarios = ["8h-9h", "9h-10h", "10h-11h", "11h-12h", "12h-13h", "13h-14h", "14h-15h", "15h-16h", "16h-17h"];
+
+const tbody = document.querySelector("#tabelaAulas tbody");
+
+// Criar linhas de aulas
+for (const dia of dias) {
+  for (const horario of horarios) {
+    const row = document.createElement("tr");
+
+    // Nome do aluno
+    const nomeTd = document.createElement("td");
+    const nomeInput = document.createElement("input");
+    nomeInput.type = "text";
+    nomeInput.placeholder = "Nome do Aluno";
+    nomeTd.appendChild(nomeInput);
+    row.appendChild(nomeTd);
+
+    // Dia
+    const diaTd = document.createElement("td");
+    const diaInput = document.createElement("input");
+    diaInput.type = "text";
+    diaInput.value = dia;
+    diaInput.disabled = true;
+    diaTd.appendChild(diaInput);
+    row.appendChild(diaTd);
+
+    // Horário
+    const horarioTd = document.createElement("td");
+    const horarioInput = document.createElement("input");
+    horarioInput.type = "text";
+    horarioInput.value = horario;
+    horarioInput.disabled = true;
+    horarioTd.appendChild(horarioInput);
+    row.appendChild(horarioTd);
+
+    // Status
+    const statusTd = document.createElement("td");
+    const statusInput = document.createElement("input");
+    statusInput.type = "text";
+    statusInput.placeholder = "Status";
+    statusInput.onfocus = () => protegerCelula(statusInput);
+    statusTd.appendChild(statusInput);
+    row.appendChild(statusTd);
+
+    // Comentários
+    const comentariosTd = document.createElement("td");
+    const comentariosInput = document.createElement("input");
+    comentariosInput.type = "text";
+    comentariosInput.placeholder = "Comentários";
+    comentariosInput.onfocus = () => protegerCelula(comentariosInput);
+    comentariosTd.appendChild(comentariosInput);
+    row.appendChild(comentariosTd);
+
+    tbody.appendChild(row);
+  }
+}
+
+const celulasProtegidas = new Set();
+
+function protegerCelula(campo) {
+  if (campo.readOnly) return;
+  campo.readOnly = true;
+  campo.classList.add("protected");
+  celulasProtegidas.add(campo);
+}
+
+function salvarDados() {
+  const dados = [];
+  document.querySelectorAll("#tabelaAulas tbody tr").forEach(row => {
+    const tds = row.querySelectorAll("td");
+    const registro = {
+      nome: tds[0].children[0].value,
+      dia: tds[1].children[0].value,
+      horario: tds[2].children[0].value,
+      status: tds[3].children[0].value,
+      comentarios: tds[4].children[0].value
+    };
+    dados.push(registro);
+  });
+  localStorage.setItem("agendaAulas", JSON.stringify(dados));
+  alert("Dados salvos!");
+}
+
+function carregarDados() {
+  const dados = JSON.parse(localStorage.getItem("agendaAulas") || "[]");
+  document.querySelector("#tabelaAulas tbody").innerHTML = "";
+  for (const reg of dados) {
+    const row = document.createElement("tr");
+
+    const nomeTd = document.createElement("td");
+    const nomeInput = document.createElement("input");
+    nomeInput.type = "text";
+    nomeInput.value = reg.nome;
+    nomeTd.appendChild(nomeInput);
+    row.appendChild(nomeTd);
+
+    const diaTd = document.createElement("td");
+    const diaInput = document.createElement("input");
+    diaInput.type = "text";
+    diaInput.value = reg.dia;
+    diaInput.disabled = true;
+    diaTd.appendChild(diaInput);
+    row.appendChild(diaTd);
+
+    const horarioTd = document.createElement("td");
+    const horarioInput = document.createElement("input");
+    horarioInput.type = "text";
+    horarioInput.value = reg.horario;
+    horarioInput.disabled = true;
+    horarioTd.appendChild(horarioInput);
+    row.appendChild(horarioTd);
+
+    const statusTd = document.createElement("td");
+    const statusInput = document.createElement("input");
+    statusInput.type = "text";
+    statusInput.value = reg.status;
+    statusInput.onfocus = () => protegerCelula(statusInput);
+    statusTd.appendChild(statusInput);
+    row.appendChild(statusTd);
+
+    const comentariosTd = document.createElement("td");
+    const comentariosInput = document.createElement("input");
+    comentariosInput.type = "text";
+    comentariosInput.value = reg.comentarios;
+    comentariosInput.onfocus = () => protegerCelula(comentariosInput);
+    comentariosTd.appendChild(comentariosInput);
+    row.appendChild(comentariosTd);
+
+    document.querySelector("#tabelaAulas tbody").appendChild(row);
+  }
+}
+</script>
+
+
+<script></script></body></html>
